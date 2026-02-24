@@ -1,51 +1,47 @@
 package at.htl.fitnesscenter.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    private String name;
+    private String firstname;
+    private String lastname;
 
-    @Email @NotBlank
     @Column(unique = true)
     private String email;
 
-    @NotBlank
-    @Column(name = "password_hash")
-    private String passwordHash; // store hashed password
-
-    @Column(name = "role")
-    private String role = "MEMBER"; // MEMBER / TRAINER / ADMIN
+    private String password;
 
     public User() {}
 
-    public User(String name, String email, String passwordHash, String role) {
-        this.name = name;
+    public User(String firstname, String lastname, String email, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
-        this.passwordHash = passwordHash;
-        this.role = role;
+        this.password = password;
     }
 
-    // getters / setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getFirstname() { return firstname; }
+
+    public void setFirstname(String firstname) { this.firstname = firstname; }
+
+    public String getLastname() { return lastname; }
+
+    public void setLastname(String lastname) { this.lastname = lastname; }
 
     public String getEmail() { return email; }
+
     public void setEmail(String email) { this.email = email; }
 
-    public String getPasswordHash() { return passwordHash; }
-    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+    public String getPassword() { return password; }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public void setPassword(String password) { this.password = password; }
 }
