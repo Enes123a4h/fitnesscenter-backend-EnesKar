@@ -2,6 +2,9 @@ package at.htl.fitnesscenter.controller;
 
 import at.htl.fitnesscenter.model.User;
 import at.htl.fitnesscenter.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,9 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
-        return service.create(user);
+    public ResponseEntity<User> create(@Valid @RequestBody User user) {
+        User created = service.create(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @GetMapping
@@ -33,12 +37,13 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user) {
+    public User update(@PathVariable Long id, @Valid @RequestBody User user) {
         return service.update(id, user);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

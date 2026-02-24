@@ -1,6 +1,9 @@
 package at.htl.fitnesscenter.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
@@ -10,12 +13,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Column(nullable = false)
     private String firstname;
+
+    @NotBlank
+    @Column(nullable = false)
     private String lastname;
 
-    @Column(unique = true)
+    @Email
+    @NotBlank
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @NotBlank
+    @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public User() {}

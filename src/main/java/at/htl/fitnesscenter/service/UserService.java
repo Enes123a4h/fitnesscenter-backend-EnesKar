@@ -1,5 +1,7 @@
 package at.htl.fitnesscenter.service;
 
+import at.htl.fitnesscenter.exception.ConflictException;
+import at.htl.fitnesscenter.exception.ResourceNotFoundException;
 import at.htl.fitnesscenter.model.User;
 import at.htl.fitnesscenter.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class UserService {
     }
 
     public User create(User user) {
+        if (repository.existsByEmail(user.getEmail())) {
+            throw new ConflictException("Email already in use");
+        }
         return repository.save(user);
     }
 
@@ -24,12 +29,18 @@ public class UserService {
     }
 
     public User getById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public User update(Long id, User updatedUser) {
-        User existing = repository.findById(id).orElse(null);
-        if (existing == null) return null;
+        User existing = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (!existing.getEmail().equalsIgnoreCase(updatedUser.getEmail())
+                && repository.existsByEmail(updatedUser.getEmail())) {
+            throw new ConflictException("Email already in use");
+        }
 
         existing.setFirstname(updatedUser.getFirstname());
         existing.setLastname(updatedUser.getLastname());
@@ -40,6 +51,9 @@ public class UserService {
     }
 
     public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("User not found");
+        }
         repository.deleteById(id);
     }
 }

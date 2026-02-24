@@ -1,5 +1,6 @@
 package at.htl.fitnesscenter.service;
 
+import at.htl.fitnesscenter.exception.ResourceNotFoundException;
 import at.htl.fitnesscenter.model.Course;
 import at.htl.fitnesscenter.model.Enrollment;
 import at.htl.fitnesscenter.model.User;
@@ -25,7 +26,9 @@ public class EnrollmentService {
     public Enrollment enroll(Long userId, Long courseId) {
         Optional<User> u = userRepository.findById(userId);
         Optional<Course> c = courseRepository.findById(courseId);
-        if (u.isEmpty() || c.isEmpty()) throw new IllegalArgumentException("User or Course not found");
+        if (u.isEmpty() || c.isEmpty()) {
+            throw new ResourceNotFoundException("User or course not found");
+        }
 
         long confirmed = enrollmentRepository.countByCourseIdAndOnWaitlistFalse(courseId);
         int capacity = c.get().getCapacity() == null ? 20 : c.get().getCapacity();

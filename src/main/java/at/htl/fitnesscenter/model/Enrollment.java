@@ -18,7 +18,7 @@ public class Enrollment {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @Column(name = "on_waitlist")
+    @Column(name = "on_waitlist", nullable = false)
     private boolean onWaitlist = false;
 
     public Enrollment() {}

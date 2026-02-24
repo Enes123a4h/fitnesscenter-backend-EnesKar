@@ -2,6 +2,8 @@ package at.htl.fitnesscenter.controller;
 
 import at.htl.fitnesscenter.model.Course;
 import at.htl.fitnesscenter.service.CourseService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,10 +18,13 @@ public class CourseController {
     public List<Course> list() { return service.listAll(); }
 
     @PostMapping
-    public Course create(@RequestBody Course c) { return service.create(c); }
+    public ResponseEntity<Course> create(@RequestBody Course c) {
+        Course created = service.create(c);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
 
     @GetMapping("/{id}")
     public Course get(@PathVariable Long id) {
-        return service.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found"));
+        return service.findById(id).orElseThrow(() -> new at.htl.fitnesscenter.exception.ResourceNotFoundException("Course not found"));
     }
 }

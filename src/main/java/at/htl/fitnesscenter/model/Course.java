@@ -11,6 +11,7 @@ public class Course {
     private Long id;
 
     @NotBlank
+    @Column(nullable = false)
     private String title;
 
     @Column(length = 2000)
@@ -24,6 +25,7 @@ public class Course {
 
     private Integer capacity = 20;
 
+    @Column(nullable = false)
     private boolean active = true;
 
     public Course() {}
