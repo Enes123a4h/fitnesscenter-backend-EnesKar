@@ -1,8 +1,10 @@
 package at.htl.fitnesscenter.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "courses")
@@ -22,6 +24,14 @@ public class Course {
 
     @Column(name = "end_time")
     private LocalDateTime endTime;
+
+    @Column(name = "trainer_name")
+    @JsonProperty("trainer")
+    private String trainerName;
+
+    @Column(name = "course_date")
+    @JsonProperty("date")
+    private LocalDate courseDate;
 
     private Integer capacity = 20;
 
@@ -53,6 +63,12 @@ public class Course {
 
     public LocalDateTime getEndTime() { return endTime; }
     public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
+
+    public String getTrainerName() { return trainerName; }
+    public void setTrainerName(String trainerName) { this.trainerName = trainerName; }
+
+    public LocalDate getCourseDate() { return courseDate; }
+    public void setCourseDate(LocalDate courseDate) { this.courseDate = courseDate; }
 
     public Integer getCapacity() { return capacity; }
     public void setCapacity(Integer capacity) { this.capacity = capacity; }

@@ -88,6 +88,7 @@ public class EmployeeService {
         employee.setEmail(request.getEmail());
         employee.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         employee.setRole(request.getRole());
+        employee.setExpertise(request.getExpertise());
         Set<String> permissions = request.getPermissions();
         if (permissions != null) {
             employee.setPermissions(permissions);
@@ -102,6 +103,7 @@ public class EmployeeService {
         response.setLastName(employee.getLastName());
         response.setEmail(employee.getEmail());
         response.setRole(employee.getRole());
+        response.setExpertise(employee.getExpertise());
         response.setPermissions(employee.getPermissions());
         response.setActive(employee.isActive());
         return response;

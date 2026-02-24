@@ -25,6 +25,8 @@ public class EmployeeRequest {
     @NotNull
     private EmployeeRole role;
 
+    private String expertise;
+
     private Set<String> permissions;
 
     private boolean active = true;
@@ -67,6 +69,14 @@ public class EmployeeRequest {
 
     public void setRole(EmployeeRole role) {
         this.role = role;
+    }
+
+    public String getExpertise() {
+        return expertise;
+    }
+
+    public void setExpertise(String expertise) {
+        this.expertise = expertise;
     }
 
     public Set<String> getPermissions() {

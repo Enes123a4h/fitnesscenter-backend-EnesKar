@@ -11,6 +11,7 @@ public class EmployeeResponse {
     private String lastName;
     private String email;
     private EmployeeRole role;
+    private String expertise;
     private Set<String> permissions;
     private boolean active;
 
@@ -52,6 +53,14 @@ public class EmployeeResponse {
 
     public void setRole(EmployeeRole role) {
         this.role = role;
+    }
+
+    public String getExpertise() {
+        return expertise;
+    }
+
+    public void setExpertise(String expertise) {
+        this.expertise = expertise;
     }
 
     public Set<String> getPermissions() {
